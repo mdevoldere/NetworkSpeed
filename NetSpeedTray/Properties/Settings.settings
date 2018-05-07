@@ -1,0 +1,18 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="Devoldere.NetSpeedTray.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="PublishDate" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">2018/05</Value>
+    </Setting>
+    <Setting Name="Author" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Mickaël DEVOLDÈRE</Value>
+    </Setting>
+    <Setting Name="Url" Type="System.String" Scope="User">
+      <Value Profile="(Default)">http://devoldere.net</Value>
+    </Setting>
+    <Setting Name="UrlLabel" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Devoldere.net</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>
