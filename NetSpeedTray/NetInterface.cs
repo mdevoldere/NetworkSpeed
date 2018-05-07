@@ -27,6 +27,10 @@ namespace Devoldere.NetSpeedTray
         public NetTraffice Traffice { get; private set; }
 
 
+        IPInterfaceProperties ipProperties;
+
+        int adressId;
+
         public NetInterface(int _key)
         {
             Id = _key;
@@ -71,21 +75,28 @@ namespace Devoldere.NetSpeedTray
             
             Mbps = (OInterface.Speed / 1000000);
 
-            IPInterfaceProperties p = OInterface.GetIPProperties();
+            ipProperties = OInterface.GetIPProperties();
 
-            if(p.UnicastAddresses.Count < 1)
+            adressId = -1;
+
+            if(ipProperties.UnicastAddresses.Count < 1)
             {
                 Ip = "0.0.0.0";
             }
-            else if ((p.UnicastAddresses.Count > 1) && (null != p.UnicastAddresses[1].Address))
+            else if ((ipProperties.UnicastAddresses.Count > 1) && (null != ipProperties.UnicastAddresses[1].Address))
             {
-                Ip = p.UnicastAddresses[1].Address.ToString();
-                if (null != (p.UnicastAddresses[1].IPv4Mask))
-                    NetMask = p.UnicastAddresses[1].IPv4Mask.ToString();
+                adressId = 1;
             }
             else
             {
-                Ip = p.UnicastAddresses[0].Address.ToString();
+                adressId = 0;
+            }
+
+            if(adressId > -1)
+            {
+                Ip = ipProperties.UnicastAddresses[adressId].Address.ToString();
+                if (null != (ipProperties.UnicastAddresses[adressId].IPv4Mask))
+                    NetMask = ipProperties.UnicastAddresses[adressId].IPv4Mask.ToString();
             }
 
             Text += "\r" + Ip + "\r" + NetMask + "\r" + Mbps.ToString() + " Mbps";
