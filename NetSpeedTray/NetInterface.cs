@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Net.NetworkInformation;
+using System.Text.RegularExpressions;
 
 namespace Devoldere.NetSpeedTray
 {
@@ -72,7 +73,6 @@ namespace Devoldere.NetSpeedTray
                 return;
             }
 
-            
             Mbps = (OInterface.Speed / 1000000);
 
             ipProperties = OInterface.GetIPProperties();
@@ -99,7 +99,11 @@ namespace Devoldere.NetSpeedTray
                     NetMask = ipProperties.UnicastAddresses[adressId].IPv4Mask.ToString();
             }
 
-            Text += "\r" + Ip + "\r" + NetMask + "\r" + Mbps.ToString() + " Mbps";
+            var macRegex = "(.{2})(.{2})(.{2})(.{2})(.{2})(.{2})";
+            var macReplace = "$1:$2:$3:$4:$5:$6";
+            var macFormat = Regex.Replace(OInterface.GetPhysicalAddress().ToString(), macRegex, macReplace);
+
+            Text +=  " - " + Mbps.ToString() + " Mbps\r" + macFormat + "\r" + Ip + "\r" + NetMask;
 
         }
 

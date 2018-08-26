@@ -185,7 +185,7 @@ namespace Devoldere.NetSpeedTray
             // 
             this.menuReloadNetwork.Image = global::Devoldere.NetSpeedTray.Properties.Resources.scroll_up_png;
             this.menuReloadNetwork.Name = "menuReloadNetwork";
-            this.menuReloadNetwork.Size = new System.Drawing.Size(180, 22);
+            this.menuReloadNetwork.Size = new System.Drawing.Size(164, 22);
             this.menuReloadNetwork.Text = "Reload Interfaces";
             this.menuReloadNetwork.Click += new System.EventHandler(this.ReloadNetwork);
             // 

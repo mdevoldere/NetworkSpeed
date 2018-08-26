@@ -37,6 +37,7 @@ namespace Devoldere.NetSpeedTray
                 if (NetworkInterface.GetAllNetworkInterfaces()[i].NetworkInterfaceType != NetworkInterfaceType.Tunnel)
                 {
                     NetInterface oInterface = new NetInterface(i);
+                    oInterface.Update();
 
                     if (oInterface.State.Up)
                     {
