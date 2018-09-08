@@ -1,90 +1,72 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Windows.Forms;
 using System.Net.NetworkInformation;
 
 namespace Devoldere.NetSpeedTray
 {
     public class NetInterfaceManager
     {
-        public List<NetInterface> InterfaceList { get; protected set; }
+        static protected readonly Timer TimerMain = new Timer { Interval = 10000 };
 
-        public int numInterfaceUp;
+        static protected readonly Timer TimerTraffice = new Timer { Interval = 1000 };
 
-        public int FirstUpInterfaceId;
+        static public readonly Timer TimerApp = new Timer { Interval = 1200 };
 
-        protected StringBuilder sb;
+        static public NetInterfaceList InterfaceList { get; private set; }
 
-        public NetInterfaceManager()
+        static public NetInterfaceList Init()
         {
-            InterfaceList = new List<NetInterface>();
-            sb = new StringBuilder();
+            if(InterfaceList == null)
+            {
+                InterfaceList = new NetInterfaceList();
+                TimerMain.Tick += Timer_Tick;
+                TimerTraffice.Tick += TimerTraffice_Tick;
+            }
+
+            return InterfaceList;
         }
 
-        public void Update()
+        static public void Start()
         {
-            if (NetworkInterface.GetAllNetworkInterfaces().Length == 0)
+            TimerMain.Start();
+            TimerTraffice.Start();
+            TimerApp.Start();
+        }
+
+        static public void Stop()
+        {
+            TimerMain.Stop();
+            TimerTraffice.Stop();
+            TimerApp.Stop();
+        }
+
+        /// <summary>
+        /// Event timer Tick
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        static public void Timer_Tick(object sender, EventArgs e)
+        {
+            foreach (NetInterface ni in InterfaceList)
             {
-                throw new Exception("No network interface");
-            }
-
-            numInterfaceUp = 0;
-            FirstUpInterfaceId = -1;
-            InterfaceList.Clear();
-
-            for (int i = 0; i < NetworkInterface.GetAllNetworkInterfaces().Length; i++)
-            {
-                if (NetworkInterface.GetAllNetworkInterfaces()[i].NetworkInterfaceType != NetworkInterfaceType.Tunnel)
-                {
-                    NetInterface oInterface = new NetInterface(i);
-                    oInterface.Update();
-
-                    if (oInterface.State.Up)
-                    {
-                        numInterfaceUp++;
-
-                        if(FirstUpInterfaceId == -1)
-                        {
-                            FirstUpInterfaceId = i;
-                        }
-                    }
-
-                    oInterface.Update();
-                    InterfaceList.Add(oInterface);
-                }
-            }
-
-            if (InterfaceList.Count < 1)
-            {
-                throw new NullReferenceException("No valid network interface");
-            }
-
-            if(FirstUpInterfaceId == -1)
-            {
-                FirstUpInterfaceId = 0;
+                ni.Update();
             }
         }
 
-        public NetInterface GetInterface(int _id)
+        /// <summary>
+        /// Event timerTraffice Tick
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        static public void TimerTraffice_Tick(object sender, EventArgs e)
         {
-            NetInterface o = InterfaceList.Find(x => (x.Id == _id));
-
-            if (null != o)
-                o.Update();
-
-            return o;
+            foreach (NetInterface ni in InterfaceList)
+            {
+                ni.UpdateTraffice();
+            }
         }
 
-        public NetInterface GetFirstUpInterface(int _id)
-        {
-            return GetInterface(FirstUpInterfaceId);
-        }
-
-        public override string ToString()
-        {
-            StringBuilder sb =  new StringBuilder("Interfaces ");
-            sb.Append("(").Append(numInterfaceUp.ToString()).Append("/").Append(InterfaceList.Count.ToString()).Append(")");
-            return sb.ToString();
-        }
     }
 }

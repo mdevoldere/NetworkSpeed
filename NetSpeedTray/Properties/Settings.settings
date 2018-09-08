@@ -3,7 +3,7 @@
   <Profiles />
   <Settings>
     <Setting Name="PublishDate" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">2018/05</Value>
+      <Value Profile="(Default)">2018/09</Value>
     </Setting>
     <Setting Name="Author" Type="System.String" Scope="User">
       <Value Profile="(Default)">Mickaël DEVOLDÈRE</Value>

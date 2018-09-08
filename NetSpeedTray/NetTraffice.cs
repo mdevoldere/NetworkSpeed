@@ -7,16 +7,19 @@ namespace Devoldere.NetSpeedTray
 {
     public class NetTraffice
     {
+
+
         long lngBytesSend = 0;              // bytes sent storage
         long lngBytesReceived = 0;          // bytes received storage
+
         private StringBuilder _bytesUnit;   // bytsunit used by BytesFormat method
 
         public long BytesSentSpeed { get; private set; }
         public long BytesReceivedSpeed { get; private set; }
 
-        public string UnicastPacketsSent { get { return interfaceStatistic.UnicastPacketsSent.ToString(); } }
+        public string UnicastPacketsSent { get { return interfaceStatistic?.UnicastPacketsSent.ToString() ?? "0"; } }
 
-        public string UnicastPacketsReceived { get { return interfaceStatistic.UnicastPacketsReceived.ToString(); } }
+        public string UnicastPacketsReceived { get { return interfaceStatistic?.UnicastPacketsReceived.ToString() ?? "0"; } }
 
         public string BytesSentText { get; private set; }
 
@@ -25,8 +28,6 @@ namespace Devoldere.NetSpeedTray
         public string BytesSentSpeedText { get; private set; }
 
         public string BytesReceivedSpeedText { get; private set; }
-
-
 
         NetworkInterface oInterface;
 
@@ -38,8 +39,17 @@ namespace Devoldere.NetSpeedTray
             BytesReceivedSpeed = 0;
         }
 
+        public NetTraffice(NetworkInterface _oInterface)
+        {
+            SetInterface(_oInterface);
+        }
+
         public void SetInterface(NetworkInterface _oInterface)
         {
+            BytesSentSpeed = 0;
+            BytesReceivedSpeed = 0;
+            lngBytesSend = 0;
+            lngBytesReceived = 0;
             oInterface = _oInterface;
         }
 

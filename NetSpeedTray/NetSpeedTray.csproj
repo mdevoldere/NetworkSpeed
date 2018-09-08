@@ -130,16 +130,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="NetSpeedWindow.cs">
+    <Compile Include="App\AppMenu.cs" />
+    <Compile Include="NetInterfaceList.cs" />
+    <Compile Include="NetInterfaceEvents.cs" />
+    <Compile Include="Old\MainWindow.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="NetSpeedWindow.Designer.cs">
-      <DependentUpon>NetSpeedWindow.cs</DependentUpon>
-    </Compile>
-    <Compile Include="MainWindow.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="MainWindow.Designer.cs">
+    <Compile Include="Old\MainWindow.Designer.cs">
       <DependentUpon>MainWindow.cs</DependentUpon>
     </Compile>
     <Compile Include="NetInterface.cs" />
@@ -148,11 +145,31 @@
     <Compile Include="NetTraffice.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="NetSpeedWindow.resx">
-      <DependentUpon>NetSpeedWindow.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="MainWindow.resx">
+    <Compile Include="Views\FrmNetInterface.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\FrmNetInterface.Designer.cs">
+      <DependentUpon>FrmNetInterface.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\FrmLayout.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\FrmLayout.Designer.cs">
+      <DependentUpon>FrmLayout.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\UCNetInterface.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Views\UCNetInterface.Designer.cs">
+      <DependentUpon>UCNetInterface.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\UCNetInterfaceList.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Views\UCNetInterfaceList.Designer.cs">
+      <DependentUpon>UCNetInterfaceList.cs</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="Old\MainWindow.resx">
       <SubType>Designer</SubType>
       <DependentUpon>MainWindow.cs</DependentUpon>
     </EmbeddedResource>
@@ -166,6 +183,19 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <EmbeddedResource Include="Views\FrmNetInterface.resx">
+      <DependentUpon>FrmNetInterface.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\FrmLayout.resx">
+      <DependentUpon>FrmLayout.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\UCNetInterface.resx">
+      <DependentUpon>UCNetInterface.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\UCNetInterfaceList.resx">
+      <DependentUpon>UCNetInterfaceList.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="app.config" />
     <None Include="NetSpeedTray_TemporaryKey.pfx" />
     <None Include="Properties\app.manifest" />
@@ -204,6 +234,7 @@
     <None Include="Resources\Refresh.png" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Resources\single.png" />
     <None Include="Resources\ico-green.ico" />
     <None Include="Resources\ico-red.ico" />
     <None Include="Resources\scroll-down.ico" />
@@ -211,8 +242,10 @@
     <None Include="Resources\scroll-down.png" />
     <None Include="Resources\scroll-up.png" />
     <None Include="Resources\2bs.png" />
+    <Content Include="Resources\multi.png" />
     <Content Include="Resources\scroll.ico" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

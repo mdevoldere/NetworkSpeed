@@ -8,7 +8,6 @@ namespace Devoldere.NetSpeedTray
 {
     public class NetInterface
     {
-
         public int Id { get; private set; }
 
         public string Name { get; private set; }
@@ -28,37 +27,52 @@ namespace Devoldere.NetSpeedTray
         public NetTraffice Traffice { get; private set; }
 
 
+        public string StateText { get { return State.Text; } }
+
+        public string TrafficeDown { get { return Traffice.BytesReceivedSpeedText; } }
+        
+        public string TrafficeUp { get { return Traffice.BytesSentSpeedText; } }
+
+
         IPInterfaceProperties ipProperties;
 
         int adressId;
+
+        public NetInterface(NetworkInterface _interface)
+        {
+            Id = 0;
+            SetInterface(_interface);
+        }
+
+        public NetInterface(NetworkInterface _interface, int _key)
+        {
+            Id = _key;
+            SetInterface(_interface);
+        }
 
         public NetInterface(int _key)
         {
             Id = _key;
 
-            State = new NetState();
-
-            Traffice = new NetTraffice();
-        }
-
-        public NetState Update()
-        {
-            if (Id < NetworkInterface.GetAllNetworkInterfaces().Length)
+            if (Id >= 0 && Id < NetworkInterface.GetAllNetworkInterfaces().Length)
             {
-                OInterface = NetworkInterface.GetAllNetworkInterfaces()[Id];
-                Traffice.SetInterface(OInterface);
+                SetInterface(NetworkInterface.GetAllNetworkInterfaces()[Id]);
             }
             else
             {
                 throw new Exception("No interface at postion " + Id.ToString());
-            }
-
-            UpdateInfo();
-
-            return State;
+            }            
         }
 
-        protected void UpdateInfo()
+        protected void SetInterface(NetworkInterface _interface)
+        {
+            OInterface = _interface;
+            State = new NetState(OInterface.OperationalStatus);
+            Traffice = new NetTraffice(OInterface);
+            Update();
+        }
+
+        public NetState Update()
         {
             State.SetState(OInterface.OperationalStatus);
             Name = OInterface.Name + " (" + State.Text + ")";
@@ -70,7 +84,7 @@ namespace Devoldere.NetSpeedTray
                 Ip = "0.0.0.0";
                 Mbps = 0;
                 Text += "\rDown";
-                return;
+                //return State;
             }
 
             Mbps = (OInterface.Speed / 1000000);
@@ -105,11 +119,13 @@ namespace Devoldere.NetSpeedTray
 
             Text +=  " - " + Mbps.ToString() + " Mbps\r" + macFormat + "\r" + Ip + "\r" + NetMask;
 
+            return State;
         }
 
         public void UpdateTraffice()
         {
-            Traffice.Update();
+            if(State.Up)
+                Traffice.Update();
         }
     }
 }

@@ -14,8 +14,7 @@ namespace Devoldere.NetSpeedTray
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            //Application.Run(new MainWindow());
-            Application.Run(new NetSpeedWindow());
+            Application.Run(new Views.FrmLayout());
         }
     }
 }
