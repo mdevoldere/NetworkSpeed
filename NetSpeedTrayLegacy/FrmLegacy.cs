@@ -7,12 +7,12 @@ using System.Text;
 using System.Windows.Forms;
 using System.Net.NetworkInformation;
 
-namespace Devoldere.NetSpeedTray
+namespace Devoldere.NetSpeedTrayLegacy
 {
     /// <summary>
     /// Old Standalone Form (working, disabled in current version)
     /// </summary>
-    public partial class MainWindow : Form
+    public partial class FrmLegacy : Form
     {
 
         #region PROPERTIES
@@ -37,7 +37,7 @@ namespace Devoldere.NetSpeedTray
         /// <summary>
         /// Initialize and Retrieve interfaces info
         /// </summary>
-        public MainWindow()
+        public FrmLegacy()
         {
             InitializeComponent();
 
@@ -90,11 +90,11 @@ namespace Devoldere.NetSpeedTray
                 oItem.ForeColor = Color.DarkGray;
                 oItem.Tag       = iInterface;
                 oItem.Click     += new System.EventHandler(this.SelectInterface);
-                oItem.Image = Devoldere.NetSpeedTray.Properties.Resources.scroll_down_png;
-                if (anInterface.OperationalStatus.ToString() == "Up")
+                oItem.Image = Devoldere.NetSpeedTrayLegacy.Properties.Resources.scroll_down_png;
+                if (anInterface.OperationalStatus == OperationalStatus.Up)
                 {
                     oItem.ForeColor = Color.Black;
-                    oItem.Image = Devoldere.NetSpeedTray.Properties.Resources.scroll_up_png;
+                    oItem.Image = Devoldere.NetSpeedTrayLegacy.Properties.Resources.scroll_up_png;
                     iInterfaceUp++;
                     if (-1 == iFirstUp)
                     {
@@ -114,7 +114,7 @@ namespace Devoldere.NetSpeedTray
             lblName.Text = oInterface.Name;
             this.Text = oInterface.Name + " " + oInterface.OperationalStatus.ToString();
 
-            if (oInterface.OperationalStatus.ToString() == "Up")
+            if (oInterface.OperationalStatus == OperationalStatus.Up)
             {
                 IsUp();
             }
@@ -170,7 +170,7 @@ namespace Devoldere.NetSpeedTray
             else
             {
                 lblName.Text += "\r" + (oInterface.GetIPProperties().UnicastAddresses[0].Address).ToString();
-                this.Icon = Devoldere.NetSpeedTray.Properties.Resources.scroll;
+                this.Icon = Devoldere.NetSpeedTrayLegacy.Properties.Resources.scroll;
             }
             lblName.Text += "\r" + (oInterface.Speed / 1000000).ToString() + " Mbps"; ;
             
@@ -179,7 +179,7 @@ namespace Devoldere.NetSpeedTray
             lblName.ForeColor = Color.Black;
             cbNotify.Enabled = true;
             this.ClientSize = new System.Drawing.Size(212, 152);
-            this.Icon = Devoldere.NetSpeedTray.Properties.Resources.scroll_up;
+            this.Icon = Devoldere.NetSpeedTrayLegacy.Properties.Resources.scroll_up;
         }
 
         /// <summary>
@@ -193,7 +193,7 @@ namespace Devoldere.NetSpeedTray
             cbNotify.Checked = false;
             cbNotify.Enabled = false;
             this.ClientSize = new System.Drawing.Size(212, 80);
-            this.Icon = Devoldere.NetSpeedTray.Properties.Resources.scroll_down;
+            this.Icon = Devoldere.NetSpeedTrayLegacy.Properties.Resources.scroll_down;
         }
 
         #endregion
@@ -288,7 +288,7 @@ namespace Devoldere.NetSpeedTray
         {
             DialogResult mResult =  MessageBox.Show
             (
-                "NetSpeedTray  1.0.0.1  (2014/12)\rMickaël  Devoldère\rhttp://devoldere.net\r\rDo you wish to visit devoldere.net ?",
+                "NetSpeedTray 1.1.0.3 (Legacy)\rMickaël  Devoldère\rhttps://devoldere.net\r\rDo you wish to visit devoldere.net ?",
                 "DEVOLDERE",
                 MessageBoxButtons.YesNo,
                 MessageBoxIcon.None
@@ -296,60 +296,19 @@ namespace Devoldere.NetSpeedTray
 
             if(mResult == DialogResult.Yes)
             {
-                System.Diagnostics.Process.Start("http://devoldere.net");
+                System.Diagnostics.Process.Start("https://devoldere.net");
             }
         }
 
         private void notifyIcon_MouseClick(object sender, MouseEventArgs e)
         {
-            cbNotify.Checked = (this.Visible == true) ? cbNotify.Checked : false; 
+            //cbNotify.Checked = (this.Visible == true) ? cbNotify.Checked : false; 
             this.Visible = (this.Visible == true) ? false : true;
-            //this.Location = new Point
-            //(
-            //    (Screen.PrimaryScreen.Bounds.Width - 290), 
-            //    (Screen.PrimaryScreen.Bounds.Height - 290)
-            //);
         }
 
         #endregion
 
-        #region TODO_AND_TESTS
-        //[DllImportAttribute("user32.dll")]
-        //public static extern int SendMessage(IntPtr hWnd, int Msg, int wParam, int lParam);
-        //[DllImportAttribute("user32.dll")]
-        //public static extern bool ReleaseCapture();
 
-        //private void Win_MouseDown(object sender, System.Windows.Forms.MouseEventArgs e)
-        //{
-        //    if (e.Button == MouseButtons.Left)
-        //    {
-        //        ReleaseCapture();
-        //        SendMessage(Handle, WM_NCLBUTTONDOWN, HT_CAPTION, 0);
-        //    }
-        //}
-
-        //private void Win_MouseDown(object sender, MouseEventArgs e)
-        //{
-        //    dragging = true;
-        //    dragCursorPoint = Cursor.Position;
-        //    dragFormPoint = this.Location;
-        //}
-
-        //private void Win_MouseMove(object sender, MouseEventArgs e)
-        //{
-        //    if (dragging)
-        //    {
-        //        Point dif = Point.Subtract(Cursor.Position, new Size(dragCursorPoint));
-        //        this.Location = Point.Add(dragFormPoint, new Size(dif));
-        //    }
-        //}
-
-        //private void Win_MouseUp(object sender, MouseEventArgs e)
-        //{
-        //    dragging = false;
-        //}
-
-        #endregion
 
     }
 }

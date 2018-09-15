@@ -29,9 +29,9 @@ namespace Devoldere.NetSpeedTray
 
         public string StateText { get { return State.Text; } }
 
-        public string TrafficeDown { get { return Traffice.BytesReceivedSpeedText; } }
+        public string TrafficeDown { get { return Traffice.SpeedDownText; } }
         
-        public string TrafficeUp { get { return Traffice.BytesSentSpeedText; } }
+        public string TrafficeUp { get { return Traffice.SpeedUpText; } }
 
 
         IPInterfaceProperties ipProperties;

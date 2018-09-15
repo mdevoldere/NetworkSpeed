@@ -7,67 +7,65 @@ namespace Devoldere.NetSpeedTray
 {
     public class NetTraffice
     {
+        private const int BYTES_DIVIDER = 1024;
 
+        private static StringBuilder _bytesUnit;   // bytsunit used by BytesFormat method
 
-        long lngBytesSend = 0;              // bytes sent storage
-        long lngBytesReceived = 0;          // bytes received storage
-
-        private StringBuilder _bytesUnit;   // bytsunit used by BytesFormat method
-
-        public long BytesSentSpeed { get; private set; }
-        public long BytesReceivedSpeed { get; private set; }
-
-        public string UnicastPacketsSent { get { return interfaceStatistic?.UnicastPacketsSent.ToString() ?? "0"; } }
-
-        public string UnicastPacketsReceived { get { return interfaceStatistic?.UnicastPacketsReceived.ToString() ?? "0"; } }
+        private long _lngBytesSend = 0;              // bytes sent storage
+        private long _lngBytesReceived = 0;          // bytes received storage
 
         public string BytesSentText { get; private set; }
-
         public string BytesReceivedText { get; private set; }
 
-        public string BytesSentSpeedText { get; private set; }
+        public long SpeedUp { get; private set; }
+        public long SpeedDown { get; private set; }
 
-        public string BytesReceivedSpeedText { get; private set; }
+        public string SpeedUpText { get; private set; }
+        public string SpeedDownText { get; private set; }
 
+        public string UnicastPacketsSent { get { return interfaceStatistic?.UnicastPacketsSent.ToString() ?? "0"; } }
+        public string UnicastPacketsReceived { get { return interfaceStatistic?.UnicastPacketsReceived.ToString() ?? "0"; } }
+ 
         NetworkInterface oInterface;
 
         IPv4InterfaceStatistics interfaceStatistic;
 
         public NetTraffice()
         {
-            BytesSentSpeed = 0;
-            BytesReceivedSpeed = 0;
+            _lngBytesSend = 0;
+            _lngBytesReceived = 0;
+            SpeedUp = 0;
+            SpeedDown = 0;
         }
 
-        public NetTraffice(NetworkInterface _oInterface)
+        public NetTraffice(NetworkInterface _oInterface) : this()
         {
             SetInterface(_oInterface);
         }
 
         public void SetInterface(NetworkInterface _oInterface)
         {
-            BytesSentSpeed = 0;
-            BytesReceivedSpeed = 0;
-            lngBytesSend = 0;
-            lngBytesReceived = 0;
             oInterface = _oInterface;
         }
 
         public void Update()
         {
-            interfaceStatistic = oInterface.GetIPv4Statistics();
+            interfaceStatistic = oInterface?.GetIPv4Statistics();
 
-            BytesSentSpeed = (interfaceStatistic.BytesSent - lngBytesSend);
-            BytesReceivedSpeed = (interfaceStatistic.BytesReceived - lngBytesReceived);
-            
-            BytesSentText = BytesFormat(interfaceStatistic.BytesSent, "B", 1024);
-            BytesReceivedText = BytesFormat(interfaceStatistic.BytesReceived, "B", 1024);
-            
-            BytesSentSpeedText = BytesFormat(BytesSentSpeed, "B/s", 1024);
-            BytesReceivedSpeedText = BytesFormat(BytesReceivedSpeed, "B/s", 1024);
-            
-            lngBytesSend = interfaceStatistic.BytesSent;
-            lngBytesReceived = interfaceStatistic.BytesReceived;
+            if(interfaceStatistic != null)
+            {
+                BytesSentText = BytesFormat(interfaceStatistic.BytesSent, "B", 1024);
+                BytesReceivedText = BytesFormat(interfaceStatistic.BytesReceived, "B", 1024);
+
+                SpeedUp = (interfaceStatistic.BytesSent - _lngBytesSend);
+                SpeedDown = (interfaceStatistic.BytesReceived - _lngBytesReceived);
+
+                SpeedUpText = BytesFormat(SpeedUp, "B/s", 1024);
+                SpeedDownText = BytesFormat(SpeedDown, "B/s", 1024);
+
+                _lngBytesSend = interfaceStatistic?.BytesSent ?? 0;
+                _lngBytesReceived = interfaceStatistic?.BytesReceived ?? 0;
+            }
         }
 
         /// <summary>
@@ -77,7 +75,7 @@ namespace Devoldere.NetSpeedTray
         /// <param name="sFormat"></param>
         /// <param name="iDivider">1000 or 1024</param>
         /// <returns></returns>
-        public string BytesFormat(double iValue, string sFormat, int iDivider)
+        public static string BytesFormat(double iValue, string sFormat, int iDivider)
         {
             if (iValue == 0)
                 return "0";

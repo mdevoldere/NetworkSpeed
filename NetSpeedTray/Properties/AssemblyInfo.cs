@@ -9,9 +9,9 @@ using System.Resources;
 [assembly: AssemblyTitle("NetSpeedTray")]
 [assembly: AssemblyDescription("NetworkInfo")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("DEVOLDERE")]
+[assembly: AssemblyCompany("DEVOLDERE.NET")]
 [assembly: AssemblyProduct("NetSpeedTray")]
-[assembly: AssemblyCopyright("Copyright © Devoldere 2018")]
+[assembly: AssemblyCopyright("Copyright © Mickael Devoldere 2018")]
 [assembly: AssemblyTrademark("MDEVOLDERE")]
 [assembly: AssemblyCulture("")]
 
@@ -30,6 +30,6 @@ using System.Resources;
 //      Build Number
 //      Revision
 //
-[assembly: AssemblyVersion("1.2.0.1")]
-[assembly: AssemblyFileVersion("1.2.0.1")]
+[assembly: AssemblyVersion("2.0.0.1")]
+[assembly: AssemblyFileVersion("2.0.0.1")]
 [assembly: NeutralResourcesLanguageAttribute("")]

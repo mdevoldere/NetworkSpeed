@@ -1,6 +1,6 @@
 ﻿namespace Devoldere.NetSpeedTray.Views
 {
-    partial class UCNetInterface
+    partial class UCViewSingle
     {
         /// <summary> 
         /// Variable nécessaire au concepteur.

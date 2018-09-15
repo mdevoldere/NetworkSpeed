@@ -11,170 +11,76 @@ namespace Devoldere.NetSpeedTray.Views
 {
     public partial class FrmLayout : Form
     {
-        protected static NetInterface currentInterface;
-        
-        protected static UCNetInterfaceList listView;
+        static Point p = new Point(5, 30);
 
-        private static Size netViewSize;
-
-        private static Size listViewSize;
-
-        #region CONSTRUCTOR
+        #region INIT
         /// <summary>
         /// Initialize
         /// </summary>
         public FrmLayout()
         {
             InitializeComponent();
-            NetInterfaceManager.Init();
-            netViewSize = new Size(netView.Width + 30, netView.Height + 75);
-            UpdateInterfaces();
-        }
-        #endregion
 
-        #region Interface list update
-
-        /// <summary>
-        /// Update Network Interfaces & bound menuInterfaces Items
-        /// </summary>
-        protected void UpdateInterfaces()
-        {
-            NetInterfaceManager.Stop();
-
-            NetInterfaceManager.InterfaceList.UpdateList();
-
-            menuInterfaces.DropDownItems.Clear();
-            foreach (NetInterface ni in NetInterfaceManager.InterfaceList)
-            {
-                ToolStripMenuItem oItem = new ToolStripMenuItem(ni.Name)
-                {
-                    ForeColor = ni.State.ForeColor,
-                    Tag = ni.Id,
-                    Image = ni.State.Png
-                };
-
-                oItem.Click += SelectInterface;
-
-                menuInterfaces.DropDownItems.Add(oItem);
-            }
-
-            menuInterfaces.Text = NetInterfaceManager.InterfaceList.ToString();
-
-            NetInterfaceManager.Start();
-
-            SelectInterface(NetInterfaceManager.InterfaceList.FirstUp);
-
-            
+            menuReload.Click += MenuEvents.ReloadApp_Click;
+            menuAbout.Click += MenuEvents.AboutApp_Click;
+            menuExit.Click += MenuEvents.CloseApp_Click;
+            menuReloadNetwork.Click += MenuEvents.ReloadNetwork_Click;
+            oContextMenuExit.Click += MenuEvents.CloseApp_Click;
         }
 
-        #endregion
-
-        #region INTERFACE SELECTION
-
-        /// <summary>
-        /// Select an interface by its ID in NetInterfaceManager.InterfaceList
-        /// </summary>
-        /// <param name="iId">Interface ID (array key in GetAllNetworkInterfaces()</param>
-        private void SelectInterface(int iId)
+        private void FrmLayout_Load(object sender, EventArgs e)
         {
-            netView.SetInterface(iId);
+            menuReloadNetwork.Tag = new ToolStripMenuItem[] { menuNetworks, contextMenuNetworks };
 
-            this.Text = netView.CurrentInterface.Name;
-            this.Icon = netView.CurrentInterface.State.Ico;
+            MenuEvents.ReloadNetwork_Click(menuReloadNetwork, new EventArgs());
 
-            oNotify.BalloonTipTitle = netView.CurrentInterface.Name;
-        }
+            oNotify.ContextMenuStrip = oContextMenu;
 
-        /// <summary>
-        /// MenuClick : Select an interface
-        /// </summary>
-        /// <param name="sender">a ToolStripMenuItem</param>
-        /// <param name="e">EventArgs</param>
-        private void SelectInterface(object sender, EventArgs e)
-        {
-            ToolStripMenuItem oItem = sender as ToolStripMenuItem;
-            SelectInterface((int)oItem.Tag);
+            MenuEvents.BindViews(this, p);
+
+            MenuViewSingle_Click(menuViewSingle, e);
         }
 
         #endregion
 
         #region EVENTS
-
-        private void ReloadApp(object sender, EventArgs e)
-        {
-            Application.Restart();
-        }
-
-        private void ReloadNetwork(object sender, EventArgs e)
-        {
-            UpdateInterfaces();
-        }
-
-        private void CloseApp(object sender, EventArgs e)
-        {
-            Environment.Exit(0);
-        }
-
-        private void AboutApp(object sender, EventArgs e)
-        {
-            DialogResult mResult = MessageBox.Show
-            (
-                System.Reflection.Assembly.GetExecutingAssembly().GetName().Name +
-                " " +
-                System.Reflection.Assembly.GetExecutingAssembly().GetName().Version +
-                " (" + Properties.Settings.Default.PublishDate + ")\r" +
-                Properties.Settings.Default.Author + "\r" +
-                Properties.Settings.Default.Url + "\r\r" +
-                "Do you wish to visit "+ Properties.Settings.Default.UrlLabel + "  ?",
-                System.Reflection.Assembly.GetExecutingAssembly().GetName().Name,
-                MessageBoxButtons.YesNo,
-                MessageBoxIcon.None
-             );
-
-            if(mResult == DialogResult.Yes)
-            {
-                System.Diagnostics.Process.Start(Properties.Settings.Default.Url);
-            }
-        }
-
-        private void notifyIcon_MouseClick(object sender, MouseEventArgs e)
+        
+        private void NotifyIcon_MouseClick(object sender, MouseEventArgs e)
         { 
+            if(e.Button == MouseButtons.Right)
+            {
+                oContextMenu.Visible = !oContextMenu.Visible;
+                return;
+            }
+
             this.Visible = !this.Visible;
          }
 
-        #endregion
 
-        private void menuViewInterface_Click(object sender, EventArgs e)
+        private void SetSize(UserControl uc)
         {
-            if(listView != null)
-            {
-                listView.Hide();
-            }
-            
-            menuInterfaces.Visible = true;
-            this.Size = netViewSize;
-            netView.Show(); 
+            Height = (uc.Height + 75);
+            Width = (uc.Width + 30);
         }
 
-        private void menuViewList_Click(object sender, EventArgs e)
+        private void MenuViewSingle_Click(object sender, EventArgs e)
         {
-            if (listView == null)
-            {
-                listView = new Views.UCNetInterfaceList();
-                listView.Location = netView.Location;
-                listViewSize = new Size(listView.Width + 30, listView.Height + 50);
-                this.Controls.Add(listView);
-            }
+            MenuEvents.ViewSingle();
+            SetSize(MenuEvents.ViewNetInterface);
+        }
 
-            netView.Hide();
-            menuInterfaces.Visible = false;
-            this.Size = listViewSize;
-            listView.Show();
+        private void MenuViewList_Click(object sender, EventArgs e)
+        {
+            MenuEvents.ViewList();
+            SetSize(MenuEvents.ViewNetInterfaceList);
         }
 
         private void FrmLayout_FormClosing(object sender, FormClosingEventArgs e)
         {
             oNotify.Visible = false;
         }
+
+        #endregion
+                
     }
 }

@@ -32,18 +32,18 @@ namespace Devoldere.NetSpeedTray.Views
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmLayout));
             this.oNotify = new System.Windows.Forms.NotifyIcon(this.components);
             this.oContextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.Exit = new System.Windows.Forms.ToolStripMenuItem();
+            this.oContextMenuExit = new System.Windows.Forms.ToolStripMenuItem();
+            this.contextMenuNetworks = new System.Windows.Forms.ToolStripMenuItem();
             this.menuFile = new System.Windows.Forms.ToolStripMenuItem();
             this.menuReload = new System.Windows.Forms.ToolStripMenuItem();
             this.menuReloadNetwork = new System.Windows.Forms.ToolStripMenuItem();
             this.menuAbout = new System.Windows.Forms.ToolStripMenuItem();
             this.menuExit = new System.Windows.Forms.ToolStripMenuItem();
-            this.menuInterfaces = new System.Windows.Forms.ToolStripMenuItem();
             this.oMenu = new System.Windows.Forms.MenuStrip();
             this.menuView = new System.Windows.Forms.ToolStripMenuItem();
-            this.menuViewInterface = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuViewSingle = new System.Windows.Forms.ToolStripMenuItem();
             this.menuViewList = new System.Windows.Forms.ToolStripMenuItem();
-            this.netView = new Devoldere.NetSpeedTray.Views.UCNetInterface();
+            this.menuNetworks = new System.Windows.Forms.ToolStripMenuItem();
             this.oContextMenu.SuspendLayout();
             this.oMenu.SuspendLayout();
             this.SuspendLayout();
@@ -55,20 +55,27 @@ namespace Devoldere.NetSpeedTray.Views
             this.oNotify.Icon = ((System.Drawing.Icon)(resources.GetObject("oNotify.Icon")));
             this.oNotify.Text = "NetSpeedTray";
             this.oNotify.Visible = true;
-            this.oNotify.MouseClick += new System.Windows.Forms.MouseEventHandler(this.notifyIcon_MouseClick);
+            this.oNotify.MouseClick += new System.Windows.Forms.MouseEventHandler(this.NotifyIcon_MouseClick);
             // 
             // oContextMenu
             // 
             this.oContextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.Exit});
+            this.oContextMenuExit,
+            this.contextMenuNetworks});
             this.oContextMenu.Name = "contextMenuStrip1";
-            this.oContextMenu.Size = new System.Drawing.Size(163, 26);
+            this.oContextMenu.Size = new System.Drawing.Size(125, 48);
             // 
-            // Exit
+            // oContextMenuExit
             // 
-            this.Exit.Name = "Exit";
-            this.Exit.Size = new System.Drawing.Size(162, 22);
-            this.Exit.Text = "contextMenuExit";
+            this.oContextMenuExit.Name = "oContextMenuExit";
+            this.oContextMenuExit.Size = new System.Drawing.Size(124, 22);
+            this.oContextMenuExit.Text = "Exit";
+            // 
+            // contextMenuNetworks
+            // 
+            this.contextMenuNetworks.Name = "contextMenuNetworks";
+            this.contextMenuNetworks.Size = new System.Drawing.Size(124, 22);
+            this.contextMenuNetworks.Text = "Networks";
             // 
             // menuFile
             // 
@@ -87,7 +94,6 @@ namespace Devoldere.NetSpeedTray.Views
             this.menuReload.Name = "menuReload";
             this.menuReload.Size = new System.Drawing.Size(164, 22);
             this.menuReload.Text = "Reload";
-            this.menuReload.Click += new System.EventHandler(this.ReloadApp);
             // 
             // menuReloadNetwork
             // 
@@ -95,7 +101,6 @@ namespace Devoldere.NetSpeedTray.Views
             this.menuReloadNetwork.Name = "menuReloadNetwork";
             this.menuReloadNetwork.Size = new System.Drawing.Size(164, 22);
             this.menuReloadNetwork.Text = "Reload Interfaces";
-            this.menuReloadNetwork.Click += new System.EventHandler(this.ReloadNetwork);
             // 
             // menuAbout
             // 
@@ -103,7 +108,6 @@ namespace Devoldere.NetSpeedTray.Views
             this.menuAbout.Name = "menuAbout";
             this.menuAbout.Size = new System.Drawing.Size(164, 22);
             this.menuAbout.Text = "About";
-            this.menuAbout.Click += new System.EventHandler(this.AboutApp);
             // 
             // menuExit
             // 
@@ -111,42 +115,35 @@ namespace Devoldere.NetSpeedTray.Views
             this.menuExit.Name = "menuExit";
             this.menuExit.Size = new System.Drawing.Size(164, 22);
             this.menuExit.Text = "Exit";
-            this.menuExit.Click += new System.EventHandler(this.CloseApp);
-            // 
-            // menuInterfaces
-            // 
-            this.menuInterfaces.Name = "menuInterfaces";
-            this.menuInterfaces.Size = new System.Drawing.Size(70, 20);
-            this.menuInterfaces.Text = "Interfaces";
             // 
             // oMenu
             // 
             this.oMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.menuFile,
             this.menuView,
-            this.menuInterfaces});
+            this.menuNetworks});
             this.oMenu.Location = new System.Drawing.Point(0, 0);
             this.oMenu.Name = "oMenu";
             this.oMenu.Padding = new System.Windows.Forms.Padding(4, 2, 0, 2);
             this.oMenu.Size = new System.Drawing.Size(234, 24);
-            this.oMenu.TabIndex = 12;
+            this.oMenu.TabIndex = 1;
             // 
             // menuView
             // 
             this.menuView.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.menuViewInterface,
+            this.menuViewSingle,
             this.menuViewList});
             this.menuView.Name = "menuView";
             this.menuView.Size = new System.Drawing.Size(44, 20);
             this.menuView.Text = "View";
             // 
-            // menuViewInterface
+            // menuViewSingle
             // 
-            this.menuViewInterface.Image = global::Devoldere.NetSpeedTray.Properties.Resources.single;
-            this.menuViewInterface.Name = "menuViewInterface";
-            this.menuViewInterface.Size = new System.Drawing.Size(180, 22);
-            this.menuViewInterface.Text = "Single";
-            this.menuViewInterface.Click += new System.EventHandler(this.menuViewInterface_Click);
+            this.menuViewSingle.Image = global::Devoldere.NetSpeedTray.Properties.Resources.single;
+            this.menuViewSingle.Name = "menuViewSingle";
+            this.menuViewSingle.Size = new System.Drawing.Size(180, 22);
+            this.menuViewSingle.Text = "Single";
+            this.menuViewSingle.Click += new System.EventHandler(this.MenuViewSingle_Click);
             // 
             // menuViewList
             // 
@@ -154,22 +151,19 @@ namespace Devoldere.NetSpeedTray.Views
             this.menuViewList.Name = "menuViewList";
             this.menuViewList.Size = new System.Drawing.Size(180, 22);
             this.menuViewList.Text = "Multi";
-            this.menuViewList.Click += new System.EventHandler(this.menuViewList_Click);
+            this.menuViewList.Click += new System.EventHandler(this.MenuViewList_Click);
             // 
-            // netView
+            // menuNetworks
             // 
-            this.netView.Location = new System.Drawing.Point(11, 27);
-            this.netView.Name = "netView";
-            this.netView.Notify = false;
-            this.netView.Size = new System.Drawing.Size(211, 150);
-            this.netView.TabIndex = 13;
+            this.menuNetworks.Name = "menuNetworks";
+            this.menuNetworks.Size = new System.Drawing.Size(69, 20);
+            this.menuNetworks.Text = "Networks";
             // 
             // FrmLayout
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(234, 182);
-            this.Controls.Add(this.netView);
             this.Controls.Add(this.oMenu);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = global::Devoldere.NetSpeedTray.Properties.Resources.scroll;
@@ -181,6 +175,7 @@ namespace Devoldere.NetSpeedTray.Views
             this.Text = "NetSpeed";
             this.TopMost = true;
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FrmLayout_FormClosing);
+            this.Load += new System.EventHandler(this.FrmLayout_Load);
             this.oContextMenu.ResumeLayout(false);
             this.oMenu.ResumeLayout(false);
             this.oMenu.PerformLayout();
@@ -192,18 +187,18 @@ namespace Devoldere.NetSpeedTray.Views
         #endregion
         private System.Windows.Forms.NotifyIcon oNotify;
         private System.Windows.Forms.ContextMenuStrip oContextMenu;
-        private System.Windows.Forms.ToolStripMenuItem Exit;
+        private System.Windows.Forms.ToolStripMenuItem oContextMenuExit;
         private System.Windows.Forms.ToolStripMenuItem menuFile;
         private System.Windows.Forms.ToolStripMenuItem menuReload;
         private System.Windows.Forms.ToolStripMenuItem menuReloadNetwork;
         private System.Windows.Forms.ToolStripMenuItem menuAbout;
         private System.Windows.Forms.ToolStripMenuItem menuExit;
-        private System.Windows.Forms.ToolStripMenuItem menuInterfaces;
         internal System.Windows.Forms.MenuStrip oMenu;
         private System.Windows.Forms.ToolStripMenuItem menuView;
-        private System.Windows.Forms.ToolStripMenuItem menuViewInterface;
-        private UCNetInterface netView;
+        private System.Windows.Forms.ToolStripMenuItem menuViewSingle;
         private System.Windows.Forms.ToolStripMenuItem menuViewList;
+        private System.Windows.Forms.ToolStripMenuItem contextMenuNetworks;
+        private System.Windows.Forms.ToolStripMenuItem menuNetworks;
     }
 }
 

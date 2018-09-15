@@ -13,7 +13,19 @@ namespace Devoldere.NetSpeedTray
 
         public NetInterface SelectedInterface { get; private set; }
 
+        protected NetworkInterface nic;
+
         protected StringBuilder sb;
+
+        /*public event PropertyChangedEventHandler PropertyChanged;
+
+        private void NotifyPropertyChanged([CallerMemberName] String propertyName = "")
+        {
+            if (PropertyChanged != null)
+            {
+                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+            }
+        }*/
 
 
         public NetInterfaceList() : base()
@@ -39,12 +51,13 @@ namespace Devoldere.NetSpeedTray
         public override string ToString()
         {
             sb = new StringBuilder();
-            sb.Append("Interfaces (").Append(CountUp.ToString()).Append("/").Append(Count.ToString()).Append(")");
+            sb.Append("Networks (").Append(CountUp.ToString()).Append("/").Append(Count.ToString()).Append(")");
             return sb.ToString();
         }
 
         public void UpdateList()
         {
+            nic = null;
             CountUp = 0;
             FirstUp = -1;
             Clear();
@@ -54,12 +67,14 @@ namespace Devoldere.NetSpeedTray
                 return;
             }
 
-            foreach(NetworkInterface nic in NetworkInterface.GetAllNetworkInterfaces())
+            for(int i = 0; i < NetworkInterface.GetAllNetworkInterfaces().Length; i++)
             {
+                nic = NetworkInterface.GetAllNetworkInterfaces()[i];
+
                 if (nic.NetworkInterfaceType != NetworkInterfaceType.Tunnel
                     && nic.NetworkInterfaceType != NetworkInterfaceType.Loopback)
                 {
-                    NetInterface ni = new NetInterface(nic, Count);
+                    NetInterface ni = new NetInterface(nic, i);
 
                     if (ni.State.Up)
                     {
@@ -74,6 +89,7 @@ namespace Devoldere.NetSpeedTray
                     ni.Update();
                     Add(ni);
                 }
+
             }
 
             if (FirstUp == -1)

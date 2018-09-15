@@ -1,6 +1,6 @@
-namespace Devoldere.NetSpeedTray
+namespace Devoldere.NetSpeedTray.Views
 {
-    partial class MainWindow
+    partial class FrmLegacy
     {
         /// <summary>
         /// Required designer variable.
@@ -29,7 +29,7 @@ namespace Devoldere.NetSpeedTray
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainWindow));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmLegacy));
             this.lblSrLbl = new System.Windows.Forms.Label();
             this.lblSrUp = new System.Windows.Forms.Label();
             this.oTimer = new System.Windows.Forms.Timer(this.components);
