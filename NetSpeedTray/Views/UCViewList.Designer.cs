@@ -75,31 +75,31 @@
             // 
             // niIp
             // 
-            this.niIp.DataPropertyName = "Ip";
+            this.niIp.DataPropertyName = "Ipv4";
             this.niIp.HeaderText = "IP";
             this.niIp.Name = "niIp";
             this.niIp.ReadOnly = true;
             // 
             // niDown
             // 
-            this.niDown.DataPropertyName = "TrafficeDown";
+            this.niDown.DataPropertyName = "SpeedDownText";
             this.niDown.HeaderText = "Down";
             this.niDown.Name = "niDown";
             this.niDown.ReadOnly = true;
             // 
             // niUp
             // 
-            this.niUp.DataPropertyName = "TrafficeUp";
+            this.niUp.DataPropertyName = "SpeedUpText";
             this.niUp.HeaderText = "Up";
             this.niUp.Name = "niUp";
             this.niUp.ReadOnly = true;
             // 
-            // UCNetInterfaceList
+            // UCViewList
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.dataGrid);
-            this.Name = "UCNetInterfaceList";
+            this.Name = "UCViewList";
             this.Size = new System.Drawing.Size(520, 160);
             ((System.ComponentModel.ISupportInitialize)(this.dataGrid)).EndInit();
             this.ResumeLayout(false);

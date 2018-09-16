@@ -10,19 +10,13 @@ using System.Net.NetworkInformation;
 namespace Devoldere.NetSpeedTrayLegacy
 {
     /// <summary>
-    /// Old Standalone Form (working, disabled in current version)
+    /// Legacy Standalone Form
     /// </summary>
     public partial class FrmLegacy : Form
     {
 
         #region PROPERTIES
 
-        //private bool dragging = false;
-        //private Point dragCursorPoint;
-        //private Point dragFormPoint;
-
-        //public const int WM_NCLBUTTONDOWN = 0xA1;
-        //public const int HT_CAPTION = 0x2;
         int iInterface = 0;                 // found interfaces
         int iInterfaceUp = 0;               // interfaces up
         int iFirstUp = -1;                  // First interface ID
@@ -58,6 +52,8 @@ namespace Devoldere.NetSpeedTrayLegacy
                 if(anInterface.NetworkInterfaceType != NetworkInterfaceType.Tunnel
                     && anInterface.NetworkInterfaceType != NetworkInterfaceType.Loopback)
                     MenuInterfacesAdd(anInterface);
+
+                
             }
 
             if (0 < iInterface)
@@ -307,8 +303,6 @@ namespace Devoldere.NetSpeedTrayLegacy
         }
 
         #endregion
-
-
 
     }
 }

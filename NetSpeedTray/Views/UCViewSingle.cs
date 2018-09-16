@@ -14,9 +14,7 @@ namespace Devoldere.NetSpeedTray.Views
         
         public bool Notify { get; set; }
 
-        public NetInterface CurrentInterface { get; private set; }
-
-        public NetTraffice CurrentTraffice { get; private set; }
+        public NetAdapter CurrentInterface { get; private set; }
 
         #endregion
 
@@ -29,25 +27,20 @@ namespace Devoldere.NetSpeedTray.Views
 
         public void NetUpdate()
         {
-            if(CurrentTraffice != null)
-            {
-                lblSrUp.Text = CurrentTraffice.UnicastPacketsSent;
-                lblSrDown.Text = CurrentTraffice.UnicastPacketsReceived;
-                lblBytesUp.Text = CurrentTraffice.BytesSentText;
-                lblBytesDown.Text = CurrentTraffice.BytesReceivedText;
-                lblUl.Text = CurrentTraffice.SpeedUpText;
-                lblDl.Text = CurrentTraffice.SpeedDownText;
-            }
+            lblSrUp.Text = CurrentInterface.UnicastPacketsSent;
+            lblSrDown.Text = CurrentInterface.UnicastPacketsReceived;
+            lblBytesUp.Text = CurrentInterface.BytesSentText;
+            lblBytesDown.Text = CurrentInterface.BytesReceivedText;
+            lblUl.Text = CurrentInterface.SpeedUpText;
+            lblDl.Text = CurrentInterface.SpeedDownText;
         }
 
         public void SetInterface(int _id)
         {
-            CurrentInterface = NetListener.InterfaceList.GetInterface(_id);
+            CurrentInterface = NetListener.AdapterList.GetInterface(_id);
 
-            CurrentTraffice = NetListener.InterfaceList.SelectedInterface.Traffice;
-
-            lblName.Text = NetListener.InterfaceList.SelectedInterface.Text;
-            lblName.ForeColor = NetListener.InterfaceList.SelectedInterface.State.ForeColor;
+            lblName.Text = NetListener.AdapterList.SelectedItem.ToString();
+            lblName.ForeColor = NetListener.AdapterList.SelectedItem.State.ForeColor;
         }
 
         #region TIMER

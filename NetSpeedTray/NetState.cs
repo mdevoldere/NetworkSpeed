@@ -38,20 +38,15 @@ namespace Devoldere.NetSpeedTray
             protected set;
         }
 
-        public NetState() : this(false)
-        {
 
-        }
+        public NetState(bool _isUp) { SetState(_isUp); }
 
-        public NetState(bool _isUp)
-        {
-            SetState(_isUp);
-        }
+        public NetState() : this(false) { } 
 
-        public NetState(OperationalStatus _oStatus)
-        {
-            SetState(_oStatus);
-        }
+        public NetState(OperationalStatus _oStatus) : this(_oStatus == OperationalStatus.Up) {  }
+
+        public NetState(NetworkInterface _interface) : this(_interface.OperationalStatus) { }
+
 
         public void SetState(OperationalStatus _oStatus)
         {

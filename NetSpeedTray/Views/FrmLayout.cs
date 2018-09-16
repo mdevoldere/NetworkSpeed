@@ -49,7 +49,7 @@ namespace Devoldere.NetSpeedTray.Views
         { 
             if(e.Button == MouseButtons.Right)
             {
-                oContextMenu.Visible = !oContextMenu.Visible;
+                oContextMenu.Show();
                 return;
             }
 

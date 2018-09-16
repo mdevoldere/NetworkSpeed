@@ -22,7 +22,7 @@ namespace Devoldere.NetSpeedTray.Views
             dataGrid.DefaultCellStyle.SelectionBackColor = dataGrid.DefaultCellStyle.BackColor;
 
             data = new BindingSource();
-            data.DataSource = NetListener.InterfaceList;
+            data.DataSource = NetListener.AdapterList;
             dataGrid.AutoGenerateColumns = false;
             dataGrid.DataSource = null;
             dataGrid.DataSource = data;
@@ -39,7 +39,7 @@ namespace Devoldere.NetSpeedTray.Views
             Point p = dataGrid.CurrentCellAddress;
             data.CurrentItemChanged += ItemUpdated;
             data.DataSource = null;
-            data.DataSource = NetListener.InterfaceList;
+            data.DataSource = NetListener.AdapterList;
             dataGrid.Update();
         }
 

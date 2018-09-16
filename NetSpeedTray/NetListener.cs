@@ -17,7 +17,9 @@ namespace Devoldere.NetSpeedTray
 
         static protected readonly Timer NetTimer = new Timer { Interval = 1000, Enabled = false };
 
-        static public NetInterfaceList InterfaceList { get; private set; } = new NetInterfaceList();
+        //static public NetInterfaceList InterfaceList { get; private set; } = new NetInterfaceList();
+
+        static public NetAdapterList AdapterList { get; private set; } = new NetAdapterList();
 
         static protected List<INetObserver> appObs = new List<INetObserver>();
 
@@ -48,7 +50,7 @@ namespace Devoldere.NetSpeedTray
         /// <param name="e"></param>
         static public void AppTimer_Tick(object sender, EventArgs e)
         {
-            foreach (NetInterface ni in InterfaceList)
+            foreach (NetAdapter ni in AdapterList)
             {
                 if(ni != null)
                     ni.Update();
@@ -64,7 +66,7 @@ namespace Devoldere.NetSpeedTray
         /// <param name="e"></param>
         static public void NetTimer_Tick(object sender, EventArgs e)
         {
-            foreach (NetInterface ni in InterfaceList)
+            foreach (NetAdapter ni in AdapterList)
             {
                 if (ni != null)
                     ni.UpdateTraffice();

@@ -30,7 +30,7 @@ namespace Devoldere.NetSpeedTray.Views
             {
                 NetListener.Stop();
 
-                NetListener.InterfaceList.UpdateList();
+                NetListener.AdapterList.UpdateList();
 
                 foreach (ToolStripMenuItem oMenu in oMenus)
                 {
@@ -39,7 +39,7 @@ namespace Devoldere.NetSpeedTray.Views
 
                 NetListener.Start();
 
-                ViewNetInterface.SetInterface(NetListener.InterfaceList.FirstUp);
+                ViewNetInterface.SetInterface(NetListener.AdapterList.FirstUp);
             }
 
 
@@ -49,7 +49,7 @@ namespace Devoldere.NetSpeedTray.Views
         {
             m.DropDownItems.Clear();
 
-            foreach (NetInterface ni in NetListener.InterfaceList)
+            foreach (NetAdapter ni in NetListener.AdapterList)
             {
                 ToolStripMenuItem oItem = new ToolStripMenuItem(ni.Name)
                 {
@@ -63,7 +63,7 @@ namespace Devoldere.NetSpeedTray.Views
                 m.DropDownItems.Add(oItem);
             }
 
-            m.Text = NetListener.InterfaceList.ToString();
+            m.Text = NetListener.AdapterList.ToString();
         }
 
         /// <summary>

@@ -5,59 +5,46 @@ using System.Net.NetworkInformation;
 
 namespace Devoldere.NetSpeedTray
 {
-    public class NetInterfaceList : List<NetInterface>
+    public class NetAdapterList : List<NetAdapter>
     {
         public int CountUp { get; private set; }
 
         public int FirstUp { get; private set; }
 
-        public NetInterface SelectedInterface { get; private set; }
+        public NetAdapter SelectedItem { get; private set; }
 
-        protected NetworkInterface nic;
-
-        protected StringBuilder sb;
-
-        /*public event PropertyChangedEventHandler PropertyChanged;
-
-        private void NotifyPropertyChanged([CallerMemberName] String propertyName = "")
-        {
-            if (PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-            }
-        }*/
+        protected static StringBuilder sb = new StringBuilder();
 
 
-        public NetInterfaceList() : base()
+        public NetAdapterList() : base()
         {
             UpdateList();
         }
 
-        public NetInterface GetInterface(int _id)
+        public NetAdapter GetInterface(int _id)
         {
-            SelectedInterface = Find(x => (x.Id == _id));
+            SelectedItem = Find(x => (x.Id == _id));
 
-            if (null != SelectedInterface)
-                SelectedInterface.Update();
+            if (null != SelectedItem)
+                SelectedItem.Update();
 
-            return SelectedInterface;
+            return SelectedItem;
         }
 
-        public NetInterface GetFirstUpInterface()
+        public NetAdapter GetFirstUpInterface()
         {
             return GetInterface(FirstUp);
         }
 
         public override string ToString()
         {
-            sb = new StringBuilder();
+            sb.Clear();
             sb.Append("Networks (").Append(CountUp.ToString()).Append("/").Append(Count.ToString()).Append(")");
             return sb.ToString();
         }
 
         public void UpdateList()
         {
-            nic = null;
             CountUp = 0;
             FirstUp = -1;
             Clear();
@@ -69,12 +56,12 @@ namespace Devoldere.NetSpeedTray
 
             for(int i = 0; i < NetworkInterface.GetAllNetworkInterfaces().Length; i++)
             {
-                nic = NetworkInterface.GetAllNetworkInterfaces()[i];
+                NetworkInterface nic = NetworkInterface.GetAllNetworkInterfaces()[i];
 
                 if (nic.NetworkInterfaceType != NetworkInterfaceType.Tunnel
                     && nic.NetworkInterfaceType != NetworkInterfaceType.Loopback)
                 {
-                    NetInterface ni = new NetInterface(nic, i);
+                    NetAdapter ni = new NetAdapter(nic, i);
 
                     if (ni.State.Up)
                     {
