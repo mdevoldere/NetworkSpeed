@@ -51,9 +51,9 @@ namespace Devoldere.NetSpeedTrayLegacy
             {
                 if(anInterface.NetworkInterfaceType != NetworkInterfaceType.Tunnel
                     && anInterface.NetworkInterfaceType != NetworkInterfaceType.Loopback)
+                {
                     MenuInterfacesAdd(anInterface);
-
-                
+                }
             }
 
             if (0 < iInterface)
