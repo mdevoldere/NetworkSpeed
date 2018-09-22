@@ -17,12 +17,6 @@ namespace Devoldere.NetSpeedTray.Views
 
         #region PROPERTIES
 
-        //private bool dragging = false;
-        //private Point dragCursorPoint;
-        //private Point dragFormPoint;
-
-        //public const int WM_NCLBUTTONDOWN = 0xA1;
-        //public const int HT_CAPTION = 0x2;
         int iInterface = 0;                 // found interfaces
         int iInterfaceUp = 0;               // interfaces up
         int iFirstUp = -1;                  // First interface ID

@@ -96,7 +96,7 @@ namespace Devoldere.NetSpeedTray.Views
             this.lblDlLbl.Name = "lblDlLbl";
             this.lblDlLbl.Size = new System.Drawing.Size(80, 16);
             this.lblDlLbl.TabIndex = 6;
-            this.lblDlLbl.Text = "DL";
+            this.lblDlLbl.Text = "Down";
             this.lblDlLbl.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // lblDl
@@ -265,7 +265,7 @@ namespace Devoldere.NetSpeedTray.Views
             this.lblUlLbl.Name = "lblUlLbl";
             this.lblUlLbl.Size = new System.Drawing.Size(80, 16);
             this.lblUlLbl.TabIndex = 7;
-            this.lblUlLbl.Text = "UL";
+            this.lblUlLbl.Text = "Up";
             this.lblUlLbl.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // LblBytesLbl
@@ -303,7 +303,7 @@ namespace Devoldere.NetSpeedTray.Views
             this.lblBytesDown.Text = "0";
             this.lblBytesDown.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
-            // MainWindow
+            // FrmLegacy
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -327,7 +327,7 @@ namespace Devoldere.NetSpeedTray.Views
             this.Icon = global::Devoldere.NetSpeedTray.Properties.Resources.scroll;
             this.MainMenuStrip = this.oMenu;
             this.MaximizeBox = false;
-            this.Name = "MainWindow";
+            this.Name = "FrmLegacy";
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Devoldere NetSpeed";

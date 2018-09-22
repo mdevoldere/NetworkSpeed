@@ -29,6 +29,7 @@ namespace Devoldere.NetSpeedTray
 
         static public void Start()
         {
+            //NetTimer_Tick(new object(), new EventArgs());
             AppTimer.Tick += AppTimer_Tick;
             NetTimer.Tick += NetTimer_Tick;
             AppTimer.Start();

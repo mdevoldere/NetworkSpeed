@@ -62,6 +62,8 @@ namespace Devoldere.NetSpeedTray
 
         public string SpeedUpText { get { return SpeedUp.BytesFormat("B/s"); } }
         public string SpeedDownText { get { return SpeedDown.BytesFormat("B/s"); } }
+        
+        public string TrafficeText { get { return ("Up: " + SpeedUpText + " / Down: " + SpeedDown.BytesFormat("B/s")); } }
 
         public string UnicastPacketsSent { get { return IpStatistic?.UnicastPacketsSent.ToString() ?? "0"; } }
         public string UnicastPacketsReceived { get { return IpStatistic?.UnicastPacketsReceived.ToString() ?? "0"; } }

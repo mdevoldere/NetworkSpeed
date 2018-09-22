@@ -32,7 +32,10 @@ namespace Devoldere.NetSpeedTray.Views
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmLayout));
             this.oNotify = new System.Windows.Forms.NotifyIcon(this.components);
             this.oContextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.oContextMenuStart = new System.Windows.Forms.ToolStripMenuItem();
+            this.oContextMenuStop = new System.Windows.Forms.ToolStripMenuItem();
             this.oContextMenuExit = new System.Windows.Forms.ToolStripMenuItem();
+            this.contextMenuView = new System.Windows.Forms.ToolStripMenuItem();
             this.contextMenuNetworks = new System.Windows.Forms.ToolStripMenuItem();
             this.menuFile = new System.Windows.Forms.ToolStripMenuItem();
             this.menuReload = new System.Windows.Forms.ToolStripMenuItem();
@@ -41,6 +44,7 @@ namespace Devoldere.NetSpeedTray.Views
             this.menuExit = new System.Windows.Forms.ToolStripMenuItem();
             this.oMenu = new System.Windows.Forms.MenuStrip();
             this.menuView = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuViewMini = new System.Windows.Forms.ToolStripMenuItem();
             this.menuViewSingle = new System.Windows.Forms.ToolStripMenuItem();
             this.menuViewList = new System.Windows.Forms.ToolStripMenuItem();
             this.menuNetworks = new System.Windows.Forms.ToolStripMenuItem();
@@ -60,21 +64,46 @@ namespace Devoldere.NetSpeedTray.Views
             // oContextMenu
             // 
             this.oContextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.oContextMenuStart,
+            this.oContextMenuStop,
             this.oContextMenuExit,
+            this.contextMenuView,
             this.contextMenuNetworks});
             this.oContextMenu.Name = "contextMenuStrip1";
-            this.oContextMenu.Size = new System.Drawing.Size(125, 48);
+            this.oContextMenu.Size = new System.Drawing.Size(198, 136);
+            // 
+            // oContextMenuStart
+            // 
+            this.oContextMenuStart.Enabled = false;
+            this.oContextMenuStart.Name = "oContextMenuStart";
+            this.oContextMenuStart.Size = new System.Drawing.Size(197, 22);
+            this.oContextMenuStart.Text = "Start";
+            this.oContextMenuStart.Click += new System.EventHandler(this.OContextMenuStartStop_Click);
+            // 
+            // oContextMenuStop
+            // 
+            this.oContextMenuStop.Name = "oContextMenuStop";
+            this.oContextMenuStop.Size = new System.Drawing.Size(197, 22);
+            this.oContextMenuStop.Text = "Stop";
+            this.oContextMenuStop.Click += new System.EventHandler(this.OContextMenuStartStop_Click);
             // 
             // oContextMenuExit
             // 
             this.oContextMenuExit.Name = "oContextMenuExit";
-            this.oContextMenuExit.Size = new System.Drawing.Size(124, 22);
+            this.oContextMenuExit.Size = new System.Drawing.Size(197, 22);
             this.oContextMenuExit.Text = "Exit";
+            // 
+            // contextMenuView
+            // 
+            this.contextMenuView.Name = "contextMenuView";
+            this.contextMenuView.Size = new System.Drawing.Size(197, 22);
+            this.contextMenuView.Text = "Switch to Mini Window";
+            this.contextMenuView.Click += new System.EventHandler(this.OContextMenuView_Click);
             // 
             // contextMenuNetworks
             // 
             this.contextMenuNetworks.Name = "contextMenuNetworks";
-            this.contextMenuNetworks.Size = new System.Drawing.Size(124, 22);
+            this.contextMenuNetworks.Size = new System.Drawing.Size(197, 22);
             this.contextMenuNetworks.Text = "Networks";
             // 
             // menuFile
@@ -131,27 +160,36 @@ namespace Devoldere.NetSpeedTray.Views
             // menuView
             // 
             this.menuView.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.menuViewMini,
             this.menuViewSingle,
             this.menuViewList});
             this.menuView.Name = "menuView";
             this.menuView.Size = new System.Drawing.Size(44, 20);
             this.menuView.Text = "View";
             // 
+            // menuViewMini
+            // 
+            this.menuViewMini.Image = global::Devoldere.NetSpeedTray.Properties.Resources.single;
+            this.menuViewMini.Name = "menuViewMini";
+            this.menuViewMini.Size = new System.Drawing.Size(106, 22);
+            this.menuViewMini.Text = "Mini";
+            this.menuViewMini.Click += new System.EventHandler(this.MenuViewSelectMini_Click);
+            // 
             // menuViewSingle
             // 
             this.menuViewSingle.Image = global::Devoldere.NetSpeedTray.Properties.Resources.single;
             this.menuViewSingle.Name = "menuViewSingle";
-            this.menuViewSingle.Size = new System.Drawing.Size(180, 22);
+            this.menuViewSingle.Size = new System.Drawing.Size(106, 22);
             this.menuViewSingle.Text = "Single";
-            this.menuViewSingle.Click += new System.EventHandler(this.MenuViewSingle_Click);
+            this.menuViewSingle.Click += new System.EventHandler(this.MenuViewSelect_Click);
             // 
             // menuViewList
             // 
             this.menuViewList.Image = global::Devoldere.NetSpeedTray.Properties.Resources.multi;
             this.menuViewList.Name = "menuViewList";
-            this.menuViewList.Size = new System.Drawing.Size(180, 22);
+            this.menuViewList.Size = new System.Drawing.Size(106, 22);
             this.menuViewList.Text = "Multi";
-            this.menuViewList.Click += new System.EventHandler(this.MenuViewList_Click);
+            this.menuViewList.Click += new System.EventHandler(this.MenuViewSelect_Click);
             // 
             // menuNetworks
             // 
@@ -174,7 +212,6 @@ namespace Devoldere.NetSpeedTray.Views
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "NetSpeed";
             this.TopMost = true;
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FrmLayout_FormClosing);
             this.Load += new System.EventHandler(this.FrmLayout_Load);
             this.oContextMenu.ResumeLayout(false);
             this.oMenu.ResumeLayout(false);
@@ -199,6 +236,10 @@ namespace Devoldere.NetSpeedTray.Views
         private System.Windows.Forms.ToolStripMenuItem menuViewList;
         private System.Windows.Forms.ToolStripMenuItem contextMenuNetworks;
         private System.Windows.Forms.ToolStripMenuItem menuNetworks;
+        private System.Windows.Forms.ToolStripMenuItem oContextMenuStart;
+        private System.Windows.Forms.ToolStripMenuItem oContextMenuStop;
+        private System.Windows.Forms.ToolStripMenuItem menuViewMini;
+        private System.Windows.Forms.ToolStripMenuItem contextMenuView;
     }
 }
 

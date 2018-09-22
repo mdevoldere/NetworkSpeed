@@ -27,20 +27,17 @@ namespace Devoldere.NetSpeedTray.Views
 
         public void NetUpdate()
         {
+            CurrentInterface = NetListener.AdapterList.SelectedItem;
+
+            lblName.Text = NetListener.AdapterList.SelectedItem.ToString();
+            lblName.ForeColor = NetListener.AdapterList.SelectedItem.State.ForeColor;
+
             lblSrUp.Text = CurrentInterface.UnicastPacketsSent;
             lblSrDown.Text = CurrentInterface.UnicastPacketsReceived;
             lblBytesUp.Text = CurrentInterface.BytesSentText;
             lblBytesDown.Text = CurrentInterface.BytesReceivedText;
             lblUl.Text = CurrentInterface.SpeedUpText;
             lblDl.Text = CurrentInterface.SpeedDownText;
-        }
-
-        public void SetInterface(int _id)
-        {
-            CurrentInterface = NetListener.AdapterList.GetInterface(_id);
-
-            lblName.Text = NetListener.AdapterList.SelectedItem.ToString();
-            lblName.ForeColor = NetListener.AdapterList.SelectedItem.State.ForeColor;
         }
 
         #region TIMER

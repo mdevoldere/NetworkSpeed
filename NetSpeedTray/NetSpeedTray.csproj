@@ -34,7 +34,7 @@
     <SuiteName>NetworkInfo</SuiteName>
     <OpenBrowserOnPublish>false</OpenBrowserOnPublish>
     <ApplicationRevision>2</ApplicationRevision>
-    <ApplicationVersion>1.1.0.2</ApplicationVersion>
+    <ApplicationVersion>2.0.0.2</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
     <BootstrapperEnabled>true</BootstrapperEnabled>
@@ -152,13 +152,25 @@
     <Compile Include="Views\FrmLayout.Designer.cs">
       <DependentUpon>FrmLayout.cs</DependentUpon>
     </Compile>
+    <Compile Include="Views\FrmLayoutMini.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\FrmLayoutMini.Designer.cs">
+      <DependentUpon>FrmLayoutMini.cs</DependentUpon>
+    </Compile>
     <Compile Include="Views\FrmLegacy.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Views\FrmLegacy.Designer.cs">
       <DependentUpon>FrmLegacy.cs</DependentUpon>
     </Compile>
-    <Compile Include="Views\MenuEvents.cs" />
+    <Compile Include="Views\AppEvents.cs" />
+    <Compile Include="Views\UCViewMini.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Views\UCViewMini.Designer.cs">
+      <DependentUpon>UCViewMini.cs</DependentUpon>
+    </Compile>
     <Compile Include="Views\UCViewSingle.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -191,9 +203,15 @@
       <DependentUpon>FrmLayout.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="Views\FrmLayoutMini.resx">
+      <DependentUpon>FrmLayoutMini.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Views\FrmLegacy.resx">
       <DependentUpon>FrmLegacy.cs</DependentUpon>
       <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\UCViewMini.resx">
+      <DependentUpon>UCViewMini.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\UCViewSingle.resx">
       <DependentUpon>UCViewSingle.cs</DependentUpon>

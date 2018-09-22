@@ -9,40 +9,34 @@ using System.Net.NetworkInformation;
 
 namespace Devoldere.NetSpeedTray.Views
 {
-    public class MenuEvents
+    public class AppEvents
     {
-        public static UCViewSingle ViewNetInterface { get; private set; } = new UCViewSingle();
-
-        public static UCViewList ViewNetInterfaceList { get; private set; } = new UCViewList();
-
         private static StringBuilder sb;
-
 
         #region MenuNetworks
 
         public static void ReloadNetwork_Click(object sender, EventArgs e)
         {
-            ToolStripItem oItem = sender as ToolStripItem;
-
-            ToolStripMenuItem[] oMenus = (oItem?.Tag as ToolStripMenuItem[]);
-
-            if (oMenus != null)
+            if(sender is ToolStripItem oItem)
             {
-                NetListener.Stop();
+                ToolStripMenuItem[] oMenus = (oItem.Tag as ToolStripMenuItem[]);
 
-                NetListener.AdapterList.UpdateList();
-
-                foreach (ToolStripMenuItem oMenu in oMenus)
+                if (oMenus != null)
                 {
-                    SetMenuInterfaces(oMenu);
+                    NetListener.Stop();
+
+                    NetListener.AdapterList.UpdateList();
+
+                    foreach (ToolStripMenuItem oMenu in oMenus)
+                    {
+                        SetMenuInterfaces(oMenu);
+                    }
+
+                    NetListener.AdapterList.GetFirstUpInterface();
+
+                    NetListener.Start();
                 }
-
-                NetListener.Start();
-
-                ViewNetInterface.SetInterface(NetListener.AdapterList.FirstUp);
             }
-
-
         }
 
         public static void SetMenuInterfaces(ToolStripMenuItem m)
@@ -73,40 +67,16 @@ namespace Devoldere.NetSpeedTray.Views
         /// <param name="e">EventArgs</param>
         public static void SelectInterface_Click(object sender, EventArgs e)
         {
-            ToolStripItem oItem = sender as ToolStripItem;
-
-            if (oItem != null)
+            try
             {
-                ViewNetInterface.SetInterface((int)oItem.Tag);
+                if (sender is ToolStripItem oItem)
+                {
+                    NetListener.AdapterList.GetInterface((int)oItem.Tag);
+                }
             }
-        }
-
-        #endregion
-
-        #region MenuView
-
-        public static void BindViews(Form frm, Point p)
-        {
-            frm.Controls.Add(ViewNetInterface);
-            frm.Controls.Add(ViewNetInterfaceList);
-
-            ViewNetInterface.Location = p;
-            ViewNetInterfaceList.Location = p;
-
-            ViewNetInterface.Hide();
-            ViewNetInterfaceList.Hide();
-        }
-
-        public static void ViewSingle()
-        {
-            ViewNetInterfaceList.Hide();
-            ViewNetInterface.Show();
-        }
-
-        public static void ViewList()
-        {
-            ViewNetInterface.Hide();
-            ViewNetInterfaceList.Show();
+            catch
+            {
+            } 
         }
 
         #endregion
