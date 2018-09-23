@@ -19,6 +19,8 @@ namespace Devoldere.NetSpeedTray.Views
 
         public static UCViewMini ViewNetInterfaceMini { get; private set; } = new UCViewMini() { Location = P };
 
+        public static UCViewSingleGraph ViewNetInterfaceGraph { get; private set; } = new UCViewSingleGraph() { Location = P };
+
         protected static UserControl CurrentView;
 
         #region INIT
@@ -32,14 +34,17 @@ namespace Devoldere.NetSpeedTray.Views
             Controls.Add(ViewNetInterface);
             Controls.Add(ViewNetInterfaceList);
             Controls.Add(ViewNetInterfaceMini);
+            Controls.Add(ViewNetInterfaceGraph);
 
             ViewNetInterface.Hide();
             ViewNetInterfaceList.Hide();
             ViewNetInterfaceMini.Hide();
+            ViewNetInterfaceGraph.Hide();
 
             menuViewMini.Tag = new FrmLayoutMini(this);
             menuViewSingle.Tag = ViewNetInterface;
             menuViewList.Tag = ViewNetInterfaceList;
+            menuViewChart.Tag = ViewNetInterfaceGraph;
 
             menuReload.Click += AppEvents.ReloadApp_Click;
             menuAbout.Click += AppEvents.AboutApp_Click;
@@ -108,7 +113,7 @@ namespace Devoldere.NetSpeedTray.Views
                 return;
             }
 
-            this.Visible = !this.Visible;
+            //this.Visible = !this.Visible;
         }
 
         private void OContextMenuStartStop_Click(object sender, EventArgs e)

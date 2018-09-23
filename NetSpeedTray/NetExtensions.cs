@@ -74,5 +74,29 @@ namespace Devoldere.NetSpeedTray
         {
             return Convert.ToDouble(iValue).BytesFormat(sFormat);
         }
+
+        /// <summary>
+        /// int example = 152;
+        /// Console.WriteLine(example.Round(100)); // round to the nearest 100
+        /// Console.WriteLine(example.Round(10)); // round to the nearest 10
+        /// </summary>
+        /// <param name="i"></param>
+        /// <param name="nearest"></param>
+        /// <returns></returns>
+        public static int Round(this int i, int nearest)
+        {
+            if (nearest <= 0 || nearest % 10 != 0)
+                throw new ArgumentOutOfRangeException("nearest", "Must round to a positive multiple of 10");
+
+            return (i + 5 * nearest / 10) / nearest * nearest;
+        }
+
+        public static long Round(this long i, int nearest)
+        {
+            if (nearest <= 0 || nearest % 10 != 0)
+                throw new ArgumentOutOfRangeException("nearest", "Must round to a positive multiple of 10");
+
+            return (i + 5 * nearest / 10) / nearest * nearest;
+        }
     }
 }

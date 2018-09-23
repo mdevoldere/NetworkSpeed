@@ -29,7 +29,7 @@ namespace Devoldere.NetSpeedTray.Views
 
             lblName.Text = CurrentInterface.Name;
             lblTrafficeUp.Text = "U: " + CurrentInterface.SpeedUpText;
-            lblTrafficeUp.Text = "D: " + CurrentInterface.SpeedDownText;
+            lblTrafficeDown.Text = "D: " + CurrentInterface.SpeedDownText;
         }
     }
 }
