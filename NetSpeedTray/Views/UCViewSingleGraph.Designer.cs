@@ -76,9 +76,10 @@
             // ucViewMini1
             // 
             this.ucViewMini1.BackColor = System.Drawing.SystemColors.Info;
+            this.ucViewMini1.Dock = System.Windows.Forms.DockStyle.Top;
             this.ucViewMini1.Location = new System.Drawing.Point(0, 0);
             this.ucViewMini1.Name = "ucViewMini1";
-            this.ucViewMini1.Size = new System.Drawing.Size(180, 36);
+            this.ucViewMini1.Size = new System.Drawing.Size(520, 36);
             this.ucViewMini1.TabIndex = 1;
             // 
             // UCViewSingleGraph

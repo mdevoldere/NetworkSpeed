@@ -13,10 +13,10 @@ namespace Devoldere.NetSpeedTray
         static string _macRegex = "(.{2})(.{2})(.{2})(.{2})(.{2})(.{2})";
         static string _macReplace = "$1:$2:$3:$4:$5:$6";
 
-        static double _kbytesDivider = 1024;
-        static double _mbytesDivider = Math.Pow(_kbytesDivider, 2);
-        static double _gbytesDivider = Math.Pow(_kbytesDivider, 3);
-        static double _tbytesDivider = Math.Pow(_kbytesDivider, 4);
+        private static readonly double _kbytesDivider = 1024;
+        private static readonly double _mbytesDivider = Math.Pow(_kbytesDivider, 2);
+        private static readonly double _gbytesDivider = Math.Pow(_kbytesDivider, 3);
+        private static readonly double _tbytesDivider = Math.Pow(_kbytesDivider, 4);
 
         static StringBuilder _bytesUnit;
 
@@ -85,10 +85,7 @@ namespace Devoldere.NetSpeedTray
         /// <returns></returns>
         public static int Round(this int i, int nearest)
         {
-            if (nearest <= 0 || nearest % 10 != 0)
-                throw new ArgumentOutOfRangeException("nearest", "Must round to a positive multiple of 10");
-
-            return (i + 5 * nearest / 10) / nearest * nearest;
+            return (int)((long)i).Round(nearest);
         }
 
         public static long Round(this long i, int nearest)
